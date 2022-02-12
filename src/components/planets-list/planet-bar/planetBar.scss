@@ -1,0 +1,18 @@
+.bar-container {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  justify-content: flex-end;
+  color: var(--textgrey);
+  min-height: 400px;
+
+  .bar {
+    width: 100px;
+    background-color: var(--yellow);
+    max-height: 500px;
+    margin: 10px 5px;
+    border-style: dashed;
+    border-width: thick;
+    border-color: #ff0000;
+  }
+}
