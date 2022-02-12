@@ -1,4 +1,4 @@
-#Deploy
+# Deploy
 
 https://hthrkuh.github.io/star-wars-data/
 
