@@ -1,10 +1,9 @@
-export const fetchList = async (url) => {
-  const list = [];
+
+export const fetchList = async (url, list = []) => {
   const res = await fetch(url);
   const data = await res.json();
   if (data.next) {
-    const newList = await fetchList(data.next);
-    list.push(...newList);
+    await fetchList(data.next, list);
   }
   list.push(...data.results);
   return list;

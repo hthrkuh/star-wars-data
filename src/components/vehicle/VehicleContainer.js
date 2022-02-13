@@ -12,33 +12,29 @@ const VehicleContainer = () => {
 
   const getMostPopulation = useCallback(async () => {
     const vehicles = await getVehiclesList();
-    let vehicleWithMostPopulation = {
-      totalPopulation: 0,
-    };
-
+    let vehiclesWithMostPopulation = [];
     await vehicles.reduce(async (promise, vehicle) => {
       await promise;
-      if (vehicle.pilots) {
+      if (vehicle?.pilots?.length) {
         const vehicleInfo = await getPopulationByPilots(vehicle.pilots);
-
-        if (
-          vehicleInfo?.totalPopulation >
-          vehicleWithMostPopulation.totalPopulation
-        ) {
-          vehicleWithMostPopulation = {
-            vehicleName: vehicle.name,
-            ...vehicleInfo,
-          };
-        }
+        vehiclesWithMostPopulation.push({
+          vehicleName: vehicle.name,
+          ...vehicleInfo,
+        })
       }
     }, Promise.resolve());
 
-    setMostPopulationPerVehicle(vehicleWithMostPopulation);
+    console.log(vehiclesWithMostPopulation)
+    vehiclesWithMostPopulation.sort(
+      (a, b) => b.totalPopulation - a.totalPopulation
+    );
+    setMostPopulationPerVehicle(vehiclesWithMostPopulation);
     setIsLoading(false);
   }, []);
 
   const getVehiclesList = async () => {
-    const vehiclesList = await fetchList(`${STARWARS_URL}/vehicles`);
+    const vehiclesList = await fetchList(`${STARWARS_URL}/vehicles`)
+    console.log(vehiclesList)
     return vehiclesList;
   };
 
@@ -80,11 +76,11 @@ const VehicleContainer = () => {
   useEffect(() => {
     getMostPopulation();
   }, [getMostPopulation]);
-
+  // mostPopulationPerVehicle
   return (
     <div>
       {!isLoading ? (
-        <Vehicle vehicle={mostPopulationPerVehicle} isLoading={isLoading} />
+        mostPopulationPerVehicle.map((vehicle, i) => <Vehicle key={i} vehicle={vehicle} isLoading={isLoading} />)
       ) : (
         <h1>loading</h1>
       )}

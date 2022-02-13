@@ -23,6 +23,7 @@ const App = () => {
             <Route path="/" element={<Navigate to="/vehicle" />} />
             <Route path="/vehicle" element={<VehicleContainer />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/star-wars-data" element={<Navigate to="/vehicle" />} />
           </Routes>
         </main>
 
